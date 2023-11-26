@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/ekol/static/css/main.b1a113ef.css",
+    "main.js": "/ekol/static/js/main.cdf3130c.js",
+    "index.html": "/ekol/index.html",
+    "main.b1a113ef.css.map": "/ekol/static/css/main.b1a113ef.css.map",
+    "main.cdf3130c.js.map": "/ekol/static/js/main.cdf3130c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b1a113ef.css",
+    "static/js/main.cdf3130c.js"
+  ]
+}
