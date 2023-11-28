@@ -16,6 +16,7 @@ import FQBlock from './components/FQBlock'
 import QNormalBlock from './components/QNormalBlock'
 
 function App() {
+  // Вводим массив данных про бенз, который считаем
   const [values, setValues] = useState([
     {
       id: 0,
@@ -147,9 +148,11 @@ function App() {
     //   QExampleCisterna: null,
     // },
   ])
+  // Вводим данный по объемы ёмкостей
   const [valueReservuar, setValueReservuar] = useState(40)
   const [valueCisterna, setValueCisterna] = useState(15)
   const [fValue, setFValue] = useState([0, 0])
+  // Здесь, при запуске страницы проекта мы делаем просчет с изначальными данными
   useEffect(() => {
     setValues((prev) =>
       prev.map((item) => ({
@@ -181,6 +184,7 @@ function App() {
     setQExampleReservuar()
     setQExampleCisterna()
   }, [])
+  // Считаем массу ЛЗР в резервуаре по формуле 4.23 и заносим в массив данных
   const setLZRReservuar = () => {
     setValues((prev) =>
       prev.map((item) => ({
@@ -189,6 +193,7 @@ function App() {
       }))
     )
   }
+  // теперь то же самое для цистерны
   const setLZRCisterna = () => {
     setValues((prev) =>
       prev.map((item) => ({
@@ -197,6 +202,7 @@ function App() {
       }))
     )
   }
+  // Считаем площадь разлива для ёмкостей, по входным данным.
   const setFValue0 = () => {
     const temp = valueReservuar * 1000 * 0.15
     setFValue((prev) => [temp, prev[1]])
@@ -205,6 +211,7 @@ function App() {
     const temp = valueCisterna * 1000 * 0.15
     setFValue((prev) => [prev[0], temp])
   }
+  // Далее считаем давление насыщенного пара по 3.4 и заносим в массив
   const setPH = () => {
     setValues((prev) =>
       prev.map((item) => ({
@@ -215,6 +222,7 @@ function App() {
       }))
     )
   }
+  // Считаем интенсивность испарения для каждого топлива по 3.3
   const setW = () => {
     setValues((prev) =>
       prev.map((item) => ({
@@ -223,6 +231,7 @@ function App() {
       }))
     )
   }
+  // Считаем массу паров по формуле 3.2
   const setSteamMassReservuar = () => {
     setValues((prev) =>
       prev.map((item) => ({
@@ -239,6 +248,7 @@ function App() {
       }))
     )
   }
+  // Приведенная маса паров по 3.6
   const setPresentMassReservuar = () => {
     setValues((prev) =>
       prev.map((item) => ({
@@ -257,6 +267,7 @@ function App() {
       }))
     )
   }
+  // Считаем излишнее давление на расстоянии 30м по 3.5
   const setDeltaReservuar = () => {
     setValues((prev) =>
       prev.map((item) => ({
@@ -281,6 +292,7 @@ function App() {
       }))
     )
   }
+  // Считаем эффективный диаметр огненного шара по 4.19
   const setDiametrReservuar = () => {
     setValues((prev) =>
       prev.map((item) => ({
@@ -297,6 +309,7 @@ function App() {
       }))
     )
   }
+  // А теперь время существования этого шара по 4.20
   const setTimeReservuar = () => {
     setValues((prev) =>
       prev.map((item) => ({
@@ -313,6 +326,7 @@ function App() {
       }))
     )
   }
+  // Считаем коэфициент пропускания тепла сквозь атмосферу
   const setKoefReservuar = () => {
     setValues((prev) =>
       prev.map((item) => ({
@@ -345,6 +359,7 @@ function App() {
       }))
     )
   }
+  // Считаем угловой коэф по 4.18
   const calculateFQ = (Ds) => {
     let H = Ds / 2
     let numerator = H / Ds + 0.5
@@ -369,6 +384,7 @@ function App() {
       }))
     )
   }
+  // Формула 4.12
   const calculateFg = (B, S, A) => {
     let part1 = (B - 1 / S) / Math.sqrt(Math.pow(B, 2) - 1)
 
@@ -386,6 +402,7 @@ function App() {
 
     return Fg
   }
+  // Формула 4.11
   const calculateFb = (S, h, A) => {
     // Часть 1: (1 / S)
     let part1 = 1 / S
@@ -410,6 +427,7 @@ function App() {
 
     return Fb
   }
+  // Считаем тепловое излучение по усложненным формулам из представленных выше. Используем 4.7, 4.22, 4.10, 4.11, 4.12, 4.13, 4.14, 4.15, 4.16 4.9, 3.8, 4.7
   const calculateQ = (Ds, koef, ts, F) => {
     let Mv = 0.04
     let r = 100
@@ -454,6 +472,7 @@ function App() {
       }))
     )
   }
+  // А тут считаем его так, как предлагалось в примере решения
   const setQExampleReservuar = () => {
     setValues((prev) =>
       prev.map((item) => ({
@@ -472,6 +491,7 @@ function App() {
       }))
     )
   }
+  // Здесь мы отслеживаем изменения объемов ёмкостей и пересчитываем необходимые значения
   useEffect(() => {
     setLZRReservuar()
     setFValue0()
@@ -500,6 +520,7 @@ function App() {
   }, [valueCisterna, values])
 
   return (
+    // Далее происходит лишь отрисовка результатов, в приемлимом виде
     <div className="bg-[#161E31] min-h-[1080px] text-white p-5">
       <ValuesBlock />
       <TanksValueBlock
